@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String
+  createdAt     DateTime  @default(now())
+  password      String
+  updatedAt     DateTime  @updatedAt
+
+  transactions   Transaction[]
+  budgets        Budget[]
+  pots           Pot[]
+  recurringBills RecurringBill[]
+
+  @@map("users")
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  amount      Float
+  category    String
+  description String
+  date        DateTime
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  budgetId    String?  @map("budget_id")
+
+  user   User    @relation(fields: [userId], references: [id])
+  budget Budget? @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+
+  @@map("transactions")
+}
+
+model Budget {
+  id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  category    String
+  amount      Float
+  spent       Float       @default(0)
+  periodStart DateTime    @map("period_start")
+  periodEnd   DateTime    @map("period_end")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("budgets")
+}
+
+model Pot {
+  id            String          @id @default(uuid())
+  userId        String
+  name          String
+  targetAmount  Float
+  currentAmount Float
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions  PotTransaction[]
+
+  @@map("pots")
+}
+
+model PotTransaction {
+  id        String   @id @default(uuid())
+  potId     String
+  amount    Float
+  type      String   // 'deposit' or 'withdraw'
+  createdAt DateTime @default(now())
+  pot       Pot      @relation(fields: [potId], references: [id], onDelete: Cascade)
+
+  @@map("pot_transactions")
+}
+
+model RecurringBill {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  name      String
+  amount    Float
+  dueDate   DateTime @map("due_date")
+  status    String
+  category  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("recurring_bills")
+}

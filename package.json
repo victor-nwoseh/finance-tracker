@@ -1,0 +1,21 @@
+{
+    "name": "finance-tracker",
+    "version": "1.0.0",
+    "scripts": {
+        "frontend": "cd frontend && npm run dev",
+        "backend": "cd backend && npm run dev",
+        "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+        "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+    },
+    "devDependencies": {
+        "concurrently": "^8.0.1"
+    },
+    "dependencies": {
+        "@types/js-cookie": "^3.0.6",
+        "@types/pg": "^8.11.11",
+        "dotenv": "^16.4.7",
+        "js-cookie": "^3.0.5",
+        "jwt-decode": "^4.0.0",
+        "pg": "^8.13.3"
+    }
+}

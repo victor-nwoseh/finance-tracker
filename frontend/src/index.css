@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply min-h-screen bg-gradient-to-br from-white via-primary-light to-[#e6f0f0] font-sans text-text;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-primary tracking-tight;
+  }
+
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  p {
+    @apply text-text leading-relaxed;
+  }
+
+  button, input, textarea, select {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 transition-all duration-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-5 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-sm;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-opacity-90 hover:shadow-md;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-primary text-primary hover:bg-primary-light hover:shadow-md;
+  }
+
+  .card {
+    @apply bg-white bg-opacity-90 backdrop-blur-md rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] p-6 transition-all duration-300;
+  }
+
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-lg rounded-xl shadow-[0_8px_32px_rgba(31,38,135,0.15)] border border-white/20 p-6;
+  }
+
+  .input-field {
+    @apply w-full p-3 border border-gray-300 rounded-lg bg-white/80 backdrop-blur-sm transition-all duration-200 focus:border-primary;
+  }
+
+  .form-group {
+    @apply mb-5;
+  }
+
+  .form-label {
+    @apply block mb-2 text-text font-medium;
+  }
+
+  .form-error {
+    @apply text-error text-sm mt-1 flex items-center;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-fast {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-[#2a5a4e] bg-clip-text text-transparent;
+  }
+
+  .page-container {
+    @apply min-h-screen flex flex-col items-center relative overflow-hidden;
+  }
+
+  .auth-centered {
+    @apply flex items-center justify-center min-h-screen;
+  }
+
+  .decorative-blob {
+    @apply absolute rounded-full opacity-20 blur-3xl;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/40 rounded-full hover:bg-primary/60 transition-colors duration-200;
+} 

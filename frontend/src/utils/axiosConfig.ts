@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const API_URL = 'http://VITE_REACT_APP_BACKEND_BASEURL/api';
+// Use the environment variable for the API URL
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  throw new Error('VITE_API_URL environment variable is not defined');
+}
 
 // Create a custom axios instance
 const api = axios.create({
